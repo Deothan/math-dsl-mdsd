@@ -1,0 +1,50 @@
+grammar dk.deothan.math.Math with org.eclipse.xtext.common.Terminals
+
+generate math "http://www.deothan.dk/math/Math"
+
+Model:
+	exps+=NamedExpression*
+;
+
+NamedExpression:
+	'Expression'name=ID ':' exp=Expression
+;
+
+Expression:
+	Factor ({Part.left = current} operator = PartOperator right = Factor)*
+;
+
+Factor returns Expression:
+	Primitive ({Factor.left = current} operator = FactorOperator right = Primitive)*
+;
+
+Primitive returns Expression:
+	NumberLiteral | Letter
+;
+
+
+PartOperator:
+	'+' | '-'
+;
+
+FactorOperator:
+	'*' | '/'
+;
+
+NumberLiteral:
+	operator = PartOperator?
+	value = NumberTypes
+;
+
+DECIMAL:
+	INT '.' INT
+;
+
+NumberTypes:
+	DECIMAL | INT
+;
+
+Letter:
+	operator = PartOperator?
+	value = ID
+;

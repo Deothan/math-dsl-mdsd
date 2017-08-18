@@ -1,0 +1,9 @@
+grammar dk.deothan.math.Math with org.eclipse.xtext.common.Terminals
+
+generate math "http://www.deothan.dk/math/Math"
+
+Model:
+	greetings+=Greeting*;
+	
+Greeting:
+	'Hello' name=ID '!';
